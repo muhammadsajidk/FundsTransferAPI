@@ -30,7 +30,7 @@ public class FundsTransferInitTest {
 
 	@Test
 	public void isServerUp() {
-		WebResource webResource = client.resource(URL + PATH + "/");
+		WebResource webResource = client.resource(URL + "/");
 		ClientResponse response = webResource.accept("application/json").type("application/json").get(ClientResponse.class);
 		Assert.assertEquals(response.getStatus(), 200);
 	}
