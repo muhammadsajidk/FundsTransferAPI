@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  * @since July, 02 2019
  */
 
-@Path("/api/fundstransfer")
+@Path("/")
 public class FundsTransferController {
 
 	private FundsTransferService fundsTransferService = new FundsTransferServiceImpl();
@@ -28,6 +28,7 @@ public class FundsTransferController {
 
 
 	@POST
+	@Path("/api/fundstransfer")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response processTransaction(Transaction transaction)  {
