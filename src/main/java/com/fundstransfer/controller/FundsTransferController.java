@@ -4,10 +4,13 @@ import com.fundstransfer.model.Transaction;
 import com.fundstransfer.model.TransactionVO;
 import com.fundstransfer.service.FundsTransferService;
 import com.fundstransfer.service.impl.FundsTransferServiceImpl;
+import com.fundstransfer.util.CommonConstants;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import static com.fundstransfer.util.CommonConstants.SERVICE_UNAVAILABLE_MSG;
 
 /**
  * @author Muhammad Sajid
@@ -32,18 +35,18 @@ public class FundsTransferController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response processTransaction(Transaction transaction)  {
-		Response response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		Response response = null;
 		try {
 			TransactionVO transactionVO = fundsTransferService.processTransaction(new TransactionVO(transaction));
 			if (transactionVO.isProcessed()) {
 				response = Response.status(Response.Status.OK).entity(transaction).build();
 			}
 			else {
-				response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(transactionVO.getTransDescription()).build();
+				response = Response.status(Response.Status.SEE_OTHER).entity(transactionVO.getTransDescription()).build();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(SERVICE_UNAVAILABLE_MSG).build();
 		}
 		return response;
 	}
