@@ -8,6 +8,9 @@ import com.fundstransfer.model.TransactionVO;
 import com.fundstransfer.service.FundsTransferService;
 import com.fundstransfer.util.CommonConstants;
 
+import static com.fundstransfer.util.CommonConstants.INSUFFICIENT_FUNDS_DESCRIPTION;
+import static com.fundstransfer.util.CommonConstants.SUCCESS_DESCRIPTION;
+
 /**
  * @author Muhammad Sajid
  * @since July, 02 2019
@@ -53,7 +56,7 @@ public class FundsTransferServiceImpl implements FundsTransferService {
 			isValid = false;
 		}
 		else if (Double.compare(transactionVO.getTransaction().getAmount(),0D)<=0){
-			transactionVO.setTransDescription("Transaction amount can negative or 0.");
+			transactionVO.setTransDescription("Transaction amount can not be negative or 0.");
 			transactionVO.setProcessed(false);
 			isValid = false;
 		}
@@ -70,11 +73,11 @@ public class FundsTransferServiceImpl implements FundsTransferService {
 			fromAccount.setBalance(fromAccountBalance - transactionAmount);
 			toAccount.setBalance(toAccountBalance + transactionAmount);
 			transactionVO.setProcessed(true);
-			transactionVO.setTransDescription(CommonConstants.SUCCESS_DESCRIPTION);
+			transactionVO.setTransDescription(SUCCESS_DESCRIPTION);
 		}
 		else {
 			transactionVO.setProcessed(false);
-			transactionVO.setTransDescription(CommonConstants.INSUFFICIENT_FUNDS_DESCRIPTION);
+			transactionVO.setTransDescription(INSUFFICIENT_FUNDS_DESCRIPTION);
 		}
 		return transactionVO.isProcessed();
 	}
