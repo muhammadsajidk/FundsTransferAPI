@@ -18,6 +18,5 @@ public interface CommonConstants {
 
 	String SUCCESS_DESCRIPTION = "Funds Transfer Successful";
 	String INSUFFICIENT_FUNDS_DESCRIPTION = "Insufficient Balance";
-
-
+	String SERVICE_UNAVAILABLE_MSG = "Service unavailable due to some technical difficulties.";
 }
